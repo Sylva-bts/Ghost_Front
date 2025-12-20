@@ -1,0 +1,252 @@
+<!doctype html>
+<html>
+    <head>
+    <meta charset="utf-8">
+    <title>Page d'acceuil du Ghost</title>
+    </head>
+    <body>
+        <style>
+            header{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                background-color: #333;
+                color: white;
+                padding: 10px;
+            }
+            .name{
+                font-size: 24px;
+                font-weight: bold;
+            }
+          /* Style moderne pour la navigation */
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 20px 30px;
+    border-radius: 0 0 15px 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+li {
+    position: relative;
+}
+
+a {
+    text-decoration: none;
+    color: purple;
+    font-weight: 600;
+    font-size: 16px;
+    padding: 12px 20px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+    z-index: -1;
+}
+
+a:hover::before {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+a:hover {
+    color: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Effet spécial pour le lien "Jeu en préparation" */
+a[href="###"] {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    animation: pulse 2s infinite;
+}
+
+a[href="###"]::after {
+    content: '🔜';
+    margin-left: 8px;
+    font-size: 14px;
+}
+
+/* Animation de pulsation pour le jeu en préparation */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(245, 87, 108, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(245, 87, 108, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(245, 87, 108, 0);
+    }
+}
+
+/* Effet de ligne animée sous les liens */
+li::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #fff, transparent);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+li:hover::after {
+    width: 80%;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    ul {
+        flex-direction: column;
+        gap: 10px;
+        padding: 15px;
+    }
+    
+    a {
+        display: block;
+        text-align: center;
+        padding: 15px;
+    }
+    
+    li::after {
+        bottom: 0;
+    }
+}
+body{
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(138, 43, 226, 0.4) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(148, 0, 211, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(75, 0, 130, 0.3) 0%, transparent 50%),
+        linear-gradient(135deg, #0a0a0a 0%, #1a0a2a 50%, #0a0a1a 100%);
+    color:#dcb0f8;
+}
+.main_info{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+}
+.section_game{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 100px;
+    
+}
+.game1, .game2{
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    max-width: 300px;
+    max-height: 750px;
+}
+button{
+    background-color: #8a2be2;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.img_intro{
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);   
+}
+footer{
+    text-align: center;
+    padding: 10px;
+    background-color: #333;
+    color: white;
+    width: 100%;
+}
+       </style>
+        <header><div class="name">ESCAPE_THE_GHOST<img src="ima/logoG1.webp" height="50px" width="50px"></div>
+            <div class="solde" id="Solde" >Solde:<span>XXXXXX</span>€</div> </header>
+<nav>
+    <ul>
+        <li><a href="inscri.html">Inscription</a></li>
+        <li><a href="connec.html">Connexion</a></li>
+        <li><a href="index.html">Infos</a></li>
+        <li><a href="###">Jeu en préparation </a></li>
+    </ul>
+</nav>
+            <div class="main_info">
+                <div class="intro">
+                    <h2>Bienvenue sur Escape the Ghost👻</h2>
+                    <p>Plongez dans l'univers palpitant d'Escape the Ghost,<br> 
+                        un jeu où chaque décision compte. Préparez-vous à affronter des défis, 
+                        <br>à esquiver les fantômes et à accumuler des gains excitants.<br> 
+                        Êtes-vous prêt à tenter votre chance et à échapper au fantôme ?<br> 
+                        <strong>L'argent n'attend pas !!!!</strong>
+                        Rejoignez-nous dès <br>
+                        maintenant et vivez une aventure inoubliable !<br>
+                    Pour nous rejoindre, cliquez vite sur <a href="inscri.html"><strong>S'inscrir</strong></a>
+                    </p>
+                </div>
+                <div class="image_intro">
+                    <img class="img_intro" src="ima/logoG.jpeg" alt="Image du jeu Escape the Ghost" width="400px" height="400px">
+                </div> 
+            </div>  
+            
+            <h2>Nos games FAVORIS</h2>
+            <div class="section_game">
+                <div class="game1">
+                    <h3>Escape the Ghost👻</h3>
+                    <img src="ima/game1.png" alt="Image du jeu Escape the Ghost" width="200px" height="300px">
+                    <p>Dans Escape the Ghost, incarnez un stickman lancé dans une course effrénée. 👻
+Un fantôme vous poursuit sans relâche, et chaque choix peut vous rapprocher de la victoire. 💰
+Votre objectif est simple : survivre et décrocher l’argent avant que le Ghost ne vous attrape ! 🔥
+</p>
+<button onclick="location.href='inscri.html'">Jouer maintenant</button>
+<button onclick="location.href='GhostR.html'">Jouer la démo</button>
+                </div>
+                <div class="game2">
+                    <h3>DOOR🎯</h3>
+                    <img src="ima/game2.png" alt="Image du jeu des portes" width="200px" height="300px">
+                    <p>Quatre portes mystérieuses se dressent devant toi... Derrière l'une d'elles, le terrible Ghost t'attend, prêt à bondir ! 😱
+Mais derrière les trois autres se cache la victoire... et peut-être même le gros lot ! 🎁✨
+Tu n’as droit qu’à un seul choix. Choisis bien... car une mauvaise porte, et c’est la fin ! 😈
+Suspense, frissons, et récompenses t’attendent dans ce jeu palpitant.</p>
+<button onclick="location.href='inscri.html'">Jouer maintenant</button>
+<button onclick="location.href='Door.html'">Jouer la démo</button>
+                </div>
+            </div>
+            <footer>
+        <p>&copy; 2024 Escape the Ghost. Tous droits réservés.</p>
+            </footer>
+    </body>     
+    </html>

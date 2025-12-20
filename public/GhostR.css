@@ -1,0 +1,154 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition: all 0.3s ease-in-out;
+}
+
+body{
+    background: #323742;
+}
+
+header {
+  background-color: #2e2e2e;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+  color: white;
+  align-items: center;
+}
+
+.solde {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.cadreJeux {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+  flex-direction: column;
+  background: #000000;
+  max-width: 460px;
+  border-radius: 0 10px 10px 0;
+  margin: auto;
+}
+
+.cote {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 10px;
+  font-size: 2em;
+  background: #3d3d38;
+  max-width: 300px;
+  border-radius: 10px 0 10px 0;
+  margin-bottom: 10px;
+}
+
+.img {
+  background: repeating-linear-gradient(
+    to right,
+    #152b7d 0,
+    #152b7d 20px,
+    white 20px,
+    white 40px
+  );
+  padding: 10px 20px;
+  height: 150px;
+  width: 100%;
+}
+
+.Acteurs {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.stick {
+  margin-right: 125px;
+
+}
+
+.Ghost {
+  animation: float 3s ease-in-out infinite, Appar 0.5s ease-out;
+  position: relative;
+  right: 10px;
+}
+@keyframes MoveEcran{
+   from{
+      background-position:0 0;
+   }
+   to {
+      background-position:40px 40px;
+   }
+}
+
+/* Animation de flottement */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+/* Animation d'apparition */
+@keyframes Appar {
+  0% {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.commandes {
+  padding: 50px;
+  align-items: center;
+}
+
+input {
+  width: 200px;
+  padding: 8px;
+}
+
+.btn-mise {
+  margin-right: 10px;
+  padding: 4px;
+  color: white;
+  background: #8098ff;
+  border: none;
+  border-radius: 6px;
+}
+
+.demarer, .retirer {
+  padding: 10px;
+  border-radius: 8px;
+  background: #3d3d38;
+  border: none;
+  transition: 0.5s;
+  margin-top: 29px;
+}
+
+.demarer:hover, .retirer:hover {
+  transform: scale(0.80);
+}
+
+.retirer:hover {
+  background: #aaffca;
+}
+
+.retirer {
+  position: relative;
+  left: 100px;
+}
