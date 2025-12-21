@@ -142,7 +142,21 @@ body{
         radial-gradient(circle at 40% 80%, rgba(75, 0, 130, 0.3) 0%, transparent 50%),
         linear-gradient(135deg, #0a0a0a 0%, #1a0a2a 50%, #0a0a1a 100%);
     color:#dcb0f8;
+    background-size: 200% 200%;
+    animation: bgMove 25s ease-in-out infinite;
 }
+@keyframes bgMove {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
 .main_info{
     display: flex;
     justify-content: space-around;
