@@ -71,37 +71,39 @@
     </div>
 
     <script>
-        document.getElementById('registerForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const messageEl = document.getElementById('message');
+        const API_URL = "https://ghost-backend.onrender.com";
 
-            try {
-                const response = await fetch('/register', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, email, password })
-                });
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const messageEl = document.getElementById('message');
 
-                const data = await response.json();
-                
-                if (response.ok) {
-                    messageEl.style.color = 'green';
-                    messageEl.textContent = '✅ ' + data.message;
-                    document.getElementById('registerForm').reset();
-                    setTimeout(() => window.location.href = '/GhostR.html', 1500);
-                } else {
-                    messageEl.style.color = 'red';
-                    messageEl.textContent = '❌ ' + data.message;
-                }
-            } catch (err) {
-                messageEl.style.color = 'red';
-                messageEl.textContent = '❌ Erreur serveur';
-                console.error(err);
-            }
+    try {
+        const response = await fetch(`${API_URL}/login`, {  // <-- URL complète
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
         });
+
+        const data = await response.json();
+        
+        if (response.ok) {
+            messageEl.style.color = 'green';
+            messageEl.textContent = '✅ Connexion réussie';
+            localStorage.setItem('user', JSON.stringify(data));
+            setTimeout(() => window.location.href = '/GhostR.html', 1500);
+        } else {
+            messageEl.style.color = 'red';
+            messageEl.textContent = '❌ ' + (data.error || data.message);
+        }
+    } catch (err) {
+        messageEl.style.color = 'red';
+        messageEl.textContent = '❌ Erreur serveur';
+        console.error(err);
+    }
+});
+
     </script>
 </body>
 </html>
