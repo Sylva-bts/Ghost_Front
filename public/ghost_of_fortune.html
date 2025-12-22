@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghost of Fortune 👻</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 30px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.3);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #00dbde, #fc00ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .slogan {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #a0a0ff;
+        }
+
+        .game-info {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            gap: 20px;
+        }
+
+        .info-box {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 15px 25px;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            min-width: 200px;
+        }
+
+        .info-box h3 {
+            color: #00ffff;
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+
+        #balance {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #00ff88;
+        }
+
+        #current-bet {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ffcc00;
+        }
+
+        .bet-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .bet-btn {
+            padding: 12px 24px;
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .bet-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .bet-btn:active {
+            transform: translateY(0);
+        }
+
+        .bet-input {
+            padding: 12px;
+            width: 150px;
+            border-radius: 8px;
+            border: 2px solid #6a11cb;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        .bet-input:focus {
+            outline: none;
+            border-color: #00ffff;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+
+        .game-area {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .cadre_jeu {
+            width: 500px;
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            margin: 0 auto;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 30px;
+            padding: 20px;
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .level {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 15px;
+            transition: all 0.5s;
+        }
+
+        .level.active {
+            background: rgba(0, 255, 255, 0.1);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+            border: 1px solid rgba(0, 255, 255, 0.4);
+        }
+
+        .level.passed {
+            background: rgba(0, 255, 0, 0.05);
+            opacity: 0.7;
+        }
+
+        .level.failed {
+            background: rgba(255, 0, 0, 0.1);
+            opacity: 0.7;
+        }
+
+        .level-header {
+            display: flex;
+            justify-content: space-between;
+            width: 120px;
+            margin-right: 10px;
+        }
+
+        .level-name {
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .multiplier {
+            color: #ffcc00;
+            font-weight: bold;
+        }
+
+        .zone {
+            width: 80px;
+            height: 80px;
+            border-radius: 15px;
+            background: linear-gradient(145deg, #1a1a2e, #16213e);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5),
+                        -3px -3px 8px rgba(255, 255, 255, 0.05);
+            font-size: 2.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .zone:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+        }
+
+        .zone.light {
+            background: linear-gradient(145deg, #00dbde, #fc00ff);
+            box-shadow: 0 0 20px rgba(0, 219, 222, 0.7);
+            color: white;
+        }
+
+        .zone.ghost {
+            background: linear-gradient(145deg, #434343, #000000);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.7);
+            color: white;
+        }
+
+        .zone.revealed {
+            cursor: default;
+        }
+
+        .zone.revealed:hover {
+            transform: none;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5),
+                        -3px -3px 8px rgba(255, 255, 255, 0.05);
+        }
+
+        .game-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .action-btn {
+            padding: 15px 35px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        #start-btn {
+            background: linear-gradient(45deg, #00b09b, #96c93d);
+            color: white;
+        }
+
+        #cashout-btn {
+            background: linear-gradient(45deg, #ff9966, #ff5e62);
+            color: white;
+            display: none;
+        }
+
+        #start-btn:hover, #cashout-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        #start-btn:disabled, #cashout-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .stats {
+            width: 400px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stats h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #00ffff;
+            border-bottom: 2px solid #00ffff;
+            padding-bottom: 10px;
+        }
+
+        .stats-content {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+
+        .stat-label {
+            color: #a0a0ff;
+        }
+
+        .stat-value {
+            font-weight: bold;
+        }
+
+        .history {
+            margin-top: 30px;
+        }
+
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+        }
+
+        .win {
+            background: rgba(0, 255, 0, 0.1);
+            color: #00ff88;
+        }
+
+        .loss {
+            background: rgba(255, 0, 0, 0.1);
+            color: #ff5555;
+        }
+
+        .message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            padding: 30px 50px;
+            border-radius: 15px;
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.3);
+            text-align: center;
+            z-index: 100;
+            display: none;
+            border: 2px solid;
+            max-width: 80%;
+        }
+
+        .message.win {
+            border-color: #00ff88;
+            box-shadow: 0 0 40px rgba(0, 255, 136, 0.5);
+        }
+
+        .message.loss {
+            border-color: #ff5555;
+            box-shadow: 0 0 40px rgba(255, 85, 85, 0.5);
+        }
+
+        .message h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .message p {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+        }
+
+        .message-btn {
+            padding: 12px 30px;
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .message-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .instructions {
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 30px;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+        }
+
+        .instructions h3 {
+            color: #00ffff;
+            margin-bottom: 15px;
+        }
+
+        .instructions ul {
+            padding-left: 20px;
+            line-height: 1.6;
+        }
+
+        .instructions li {
+            margin-bottom: 8px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 1100px) {
+            .game-area {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .stats {
+                width: 500px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .cadre_jeu {
+                width: 95%;
+                padding: 10px;
+            }
+            
+            .zone {
+                width: 70px;
+                height: 70px;
+            }
+            
+            .stats {
+                width: 95%;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .bet-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>👻 GHOST OF FORTUNE 👻</h1>
+            <p class="slogan">Trouvez la lumière, évitez le fantôme !</p>
+            
+            <div class="game-info">
+                <div class="info-box">
+                    <h3>SOLDE</h3>
+                    <div id="balance">1000</div> €
+                </div>
+                
+                <div class="info-box">
+                    <h3>MISE ACTUELLE</h3>
+                    <div id="current-bet">0</div> €
+                </div>
+                
+                <div class="info-box">
+                    <h3>NIVEAU ACTUEL</h3>
+                    <div id="current-level">-</div>
+                </div>
+                
+                <div class="info-box">
+                    <h3>GAINS POTENTIELS</h3>
+                    <div id="potential-win">0</div> €
+                </div>
+            </div>
+            
+            <div class="bet-controls">
+                <button class="bet-btn" onclick="changeBet(10)">+10 €</button>
+                <button class="bet-btn" onclick="changeBet(50)">+50 €</button>
+                <button class="bet-btn" onclick="changeBet(100)">+100 €</button>
+                <button class="bet-btn" onclick="changeBet(500)">+500 €</button>
+                <input type="number" class="bet-input" id="bet-amount" min="10" max="10000" value="100" onchange="updateBet()">
+                <button class="bet-btn" onclick="setBetHalf()">½</button>
+                <button class="bet-btn" onclick="setBetDouble()">2×</button>
+                <button class="bet-btn" onclick="setBetMax()">MAX</button>
+            </div>
+        </header>
+        
+        <div class="game-area">
+            <div class="cadre_jeu" id="game-board">
+                <!-- Les niveaux seront générés par JavaScript -->
+            </div>
+            
+            <div class="stats">
+                <h2>STATISTIQUES</h2>
+                <div class="stats-content">
+                    <div class="stat-item">
+                        <span class="stat-label">Parties jouées:</span>
+                        <span class="stat-value" id="games-played">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Gains totaux:</span>
+                        <span class="stat-value" id="total-wins">0 €</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Pertes totales:</span>
+                        <span class="stat-value" id="total-losses">0 €</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Plus gros gain:</span>
+                        <span class="stat-value" id="biggest-win">0 €</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Niveau max atteint:</span>
+                        <span class="stat-value" id="max-level">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Taux de réussite:</span>
+                        <span class="stat-value" id="success-rate">0%</span>
+                    </div>
+                </div>
+                
+                <div class="history">
+                    <h3>DERNIÈRES PARTIES</h3>
+                    <div id="game-history">
+                        <!-- L'historique sera généré par JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="game-controls">
+            <button class="action-btn" id="start-btn" onclick="startGame()">COMMENCER LA PARTIE</button>
+            <button class="action-btn" id="cashout-btn" onclick="cashOut()">CASHOUT</button>
+        </div>
+        
+        <div class="instructions">
+            <h3>COMMENT JOUER ?</h3>
+            <ul>
+                <li>1. Définissez votre mise (minimum 10€)</li>
+                <li>2. Cliquez sur "COMMENCER LA PARTIE"</li>
+                <li>3. À chaque niveau, choisissez une case parmi les trois</li>
+                <li>4. Deux cases contiennent une lumière 💡 (gain), une case contient un fantôme 👻 (perte)</li>
+                <li>5. Si vous trouvez une lumière, vous passez au niveau suivant avec un multiplicateur accru</li>
+                <li>6. Si vous trouvez le fantôme, vous perdez votre mise et la partie se termine</li>
+                <li>7. Vous pouvez encaisser vos gains à tout moment avec le bouton "CASHOUT"</li>
+                <li>8. Les multiplicateurs augmentent à chaque niveau : Niv1 (×1.25) → Niv6 (×12.05)</li>
+            </ul>
+        </div>
+        
+        <footer>
+            <p>Ghost of Fortune 👻 - Jeu de casino créé pour le divertissement. Jouez avec modération.</p>
+        </footer>
+        
+        <div class="message" id="message">
+            <!-- Les messages de gain/perte seront affichés ici -->
+        </div>
+    </div>
+
+    <script>
+    // Configuration du jeu
+const gameConfig = {
+    levels: [
+        { name: "NIV1", multiplier: 1.25, ghosts: 1, active: false },
+        { name: "NIV2", multiplier: 1.45, ghosts: 1, active: false },
+        { name: "NIV3", multiplier: 2.11, ghosts: 1, active: false },
+        { name: "NIV4", multiplier: 3.50, ghosts: 1, active: false },
+        { name: "NIV5", multiplier: 7.45, ghosts: 2, active: false },
+        { name: "NIV6", multiplier: 12.05, ghosts: 2, active: false }
+    ],
+    balance: 1000,
+    currentBet: 100,
+    currentLevel: 0,
+    gameActive: false,
+    cashoutAvailable: false,
+    ghostPositions: [],
+    stats: {
+        gamesPlayed: 0,
+        totalWins: 0,
+        totalLosses: 0,
+        biggestWin: 0,
+        maxLevelReached: 0,
+        gameHistory: []
+    }
+};
+
+// Initialisation des éléments DOM
+const balanceElement = document.getElementById('balance');
+const currentBetElement = document.getElementById('current-bet');
+const currentLevelElement = document.getElementById('current-level');
+const potentialWinElement = document.getElementById('potential-win');
+const gameBoardElement = document.getElementById('game-board');
+const startButton = document.getElementById('start-btn');
+const cashoutButton = document.getElementById('cashout-btn');
+const betInput = document.getElementById('bet-amount');
+const messageElement = document.getElementById('message');
+
+// Charger les statistiques depuis le localStorage
+function loadStats() {
+    const savedStats = localStorage.getItem('ghostOfFortuneStats');
+    if (savedStats) {
+        const parsedStats = JSON.parse(savedStats);
+        // S'assurer que toutes les propriétés existent
+        gameConfig.stats = {
+            gamesPlayed: parsedStats.gamesPlayed || 0,
+            totalWins: parsedStats.totalWins || 0,
+            totalLosses: parsedStats.totalLosses || 0,
+            biggestWin: parsedStats.biggestWin || 0,
+            maxLevelReached: parsedStats.maxLevelReached || 0,
+            gameHistory: parsedStats.gameHistory || []
+        };
+        updateStatsDisplay();
+    }
+}
+
+// Sauvegarder les statistiques dans le localStorage
+function saveStats() {
+    localStorage.setItem('ghostOfFortuneStats', JSON.stringify(gameConfig.stats));
+}
+
+// Mettre à jour l'affichage des statistiques
+function updateStatsDisplay() {
+    document.getElementById('games-played').textContent = gameConfig.stats.gamesPlayed;
+    document.getElementById('total-wins').textContent = gameConfig.stats.totalWins.toFixed(2) + ' €';
+    document.getElementById('total-losses').textContent = gameConfig.stats.totalLosses.toFixed(2) + ' €';
+    document.getElementById('biggest-win').textContent = gameConfig.stats.biggestWin.toFixed(2) + ' €';
+    document.getElementById('max-level').textContent = gameConfig.stats.maxLevelReached;
+    
+    const successRate = gameConfig.stats.gamesPlayed > 0 
+        ? ((gameConfig.stats.totalWins / (gameConfig.stats.totalWins + gameConfig.stats.totalLosses)) * 100).toFixed(1)
+        : 0;
+    document.getElementById('success-rate').textContent = successRate + '%';
+    
+    updateGameHistory();
+}
+
+// Mettre à jour l'historique des parties
+function updateGameHistory() {
+    const historyElement = document.getElementById('game-history');
+    historyElement.innerHTML = '';
+    
+    // Afficher les 5 dernières parties
+    const recentGames = gameConfig.stats.gameHistory.slice(-5).reverse();
+    
+    if (recentGames.length === 0) {
+        historyElement.innerHTML = '<p style="text-align: center; color: #888;">Aucune partie jouée</p>';
+        return;
+    }
+    
+    recentGames.forEach(game => {
+        const historyItem = document.createElement('div');
+        historyItem.className = `history-item ${game.result}`;
+        
+        const resultIcon = game.result === 'win' ? '💡' : '👻';
+        const resultText = game.result === 'win' ? 'Gain: ' : 'Perte: ';
+        
+        historyItem.innerHTML = `
+            <span>${resultIcon} Niveau ${game.level}</span>
+            <span>${resultText} ${game.amount.toFixed(2)} €</span>
+        `;
+        
+        historyElement.appendChild(historyItem);
+    });
+}
+
+// Initialiser le tableau de jeu
+function initializeGameBoard() {
+    gameBoardElement.innerHTML = '';
+    
+    // Créer les niveaux dans l'ordre inverse (niveau 6 en haut)
+    for (let i = gameConfig.levels.length - 1; i >= 0; i--) {
+        const level = gameConfig.levels[i];
+        
+        const levelElement = document.createElement('div');
+        levelElement.className = 'level';
+        levelElement.id = `level-${i}`;
+        
+        const levelHeader = document.createElement('div');
+        levelHeader.className = 'level-header';
+        levelHeader.innerHTML = `
+            <span class="level-name">${level.name}</span>
+            <span class="multiplier">×${level.multiplier.toFixed(2)}</span>
+        `;
+        
+        levelElement.appendChild(levelHeader);
+        
+        // Ajouter les 3 zones pour ce niveau
+        for (let j = 0; j < 3; j++) {
+            const zone = document.createElement('div');
+            zone.className = 'zone';
+            zone.dataset.level = i;
+            zone.dataset.position = j;
+            zone.innerHTML = '?';
+            zone.onclick = () => selectZone(i, j);
+            
+            levelElement.appendChild(zone);
+        }
+        
+        gameBoardElement.appendChild(levelElement);
+    }
+}
+
+// Mettre à jour l'affichage du jeu
+function updateGameDisplay() {
+    balanceElement.textContent = gameConfig.balance.toFixed(2);
+    currentBetElement.textContent = gameConfig.currentBet.toFixed(2);
+    currentLevelElement.textContent = gameConfig.gameActive ? gameConfig.levels[gameConfig.currentLevel].name : '-';
+    
+    // Calculer les gains potentiels
+    const potentialWin = gameConfig.gameActive 
+        ? gameConfig.currentBet * gameConfig.levels[gameConfig.currentLevel].multiplier 
+        : 0;
+    potentialWinElement.textContent = potentialWin.toFixed(2);
+    
+    // Mettre à jour l'apparence des niveaux
+    for (let i = 0; i < gameConfig.levels.length; i++) {
+        const levelElement = document.getElementById(`level-${i}`);
+        const level = gameConfig.levels[i];
+        
+        // Réinitialiser les classes
+        levelElement.classList.remove('active', 'passed', 'failed');
+        
+        // Ajouter la classe appropriée
+        if (gameConfig.gameActive && i === gameConfig.currentLevel) {
+            levelElement.classList.add('active');
+        } else if (!gameConfig.gameActive && level.active) {
+            levelElement.classList.add('passed');
+        } else if (!gameConfig.gameActive && i < gameConfig.currentLevel && !level.active) {
+            levelElement.classList.add('failed');
+        }
+    }
+    
+    // Activer/désactiver les boutons
+    startButton.disabled = gameConfig.gameActive || gameConfig.currentBet < 10 || gameConfig.currentBet > gameConfig.balance;
+    cashoutButton.style.display = gameConfig.cashoutAvailable ? 'block' : 'none';
+    
+    // Mettre à jour la valeur d'entrée de mise
+    betInput.value = gameConfig.currentBet;
+}
+
+// Gérer les changements de mise
+function changeBet(amount) {
+    if (gameConfig.gameActive) return;
+    
+    const newBet = gameConfig.currentBet + amount;
+    if (newBet >= 10 && newBet <= gameConfig.balance) {
+        gameConfig.currentBet = newBet;
+        updateGameDisplay();
+    }
+}
+
+function updateBet() {
+    if (gameConfig.gameActive) return;
+    
+    const newBet = parseFloat(betInput.value) || 0;
+    if (newBet >= 10 && newBet <= gameConfig.balance) {
+        gameConfig.currentBet = newBet;
+        updateGameDisplay();
+    } else {
+        betInput.value = gameConfig.currentBet;
+    }
+}
+
+function setBetHalf() {
+    if (gameConfig.gameActive) return;
+    
+    gameConfig.currentBet = Math.max(10, Math.floor(gameConfig.currentBet / 2));
+    updateGameDisplay();
+}
+
+function setBetDouble() {
+    if (gameConfig.gameActive) return;
+    
+    const newBet = gameConfig.currentBet * 2;
+    if (newBet <= gameConfig.balance) {
+        gameConfig.currentBet = newBet;
+        updateGameDisplay();
+    }
+}
+
+function setBetMax() {
+    if (gameConfig.gameActive) return;
+    
+    gameConfig.currentBet = gameConfig.balance;
+    updateGameDisplay();
+}
+
+// Démarrer une nouvelle partie
+function startGame() {
+    if (gameConfig.gameActive || gameConfig.currentBet < 10 || gameConfig.currentBet > gameConfig.balance) {
+        return;
+    }
+    
+    // Réinitialiser l'état du jeu
+    gameConfig.gameActive = true;
+    gameConfig.currentLevel = 0;
+    gameConfig.cashoutAvailable = true;
+    gameConfig.ghostPositions = [];
+    
+    // Réinitialiser les niveaux
+    gameConfig.levels.forEach(level => level.active = false);
+    
+    // Déduire la mise du solde
+    gameConfig.balance -= gameConfig.currentBet;
+    
+    // Mettre à jour l'affichage
+    updateGameDisplay();
+    
+    // Activer les zones du premier niveau
+    activateLevelZones(0);
+    
+    // Réinitialiser toutes les zones visuellement
+    resetAllZones();
+    
+    // Mettre à jour les statistiques
+    gameConfig.stats.gamesPlayed++;
+    saveStats();
+    updateStatsDisplay();
+}
+
+// Réinitialiser toutes les zones visuellement
+function resetAllZones() {
+    document.querySelectorAll('.zone').forEach(zone => {
+        zone.classList.remove('revealed', 'ghost', 'light');
+        zone.innerHTML = '?';
+        zone.style.cursor = 'pointer';
+        
+        // Réactiver les écouteurs d'événements
+        const level = zone.dataset.level;
+        const position = zone.dataset.position;
+        if (level !== undefined && position !== undefined) {
+            zone.onclick = () => selectZone(parseInt(level), parseInt(position));
+        }
+    });
+}
+
+// Activer les zones d'un niveau
+function activateLevelZones(levelIndex) {
+    // Désactiver temporairement toutes les zones
+    document.querySelectorAll('.zone').forEach(zone => {
+        zone.style.cursor = 'default';
+    });
+    
+    // Réactiver seulement les zones du niveau actuel
+    setTimeout(() => {
+        const levelZones = document.querySelectorAll(`.zone[data-level="${levelIndex}"]`);
+        levelZones.forEach(zone => {
+            zone.style.cursor = 'pointer';
+        });
+    }, 500);
+}
+
+// Sélectionner une zone
+function selectZone(levelIndex, position) {
+    // Vérifier si le jeu est actif et si c'est le bon niveau
+    if (!gameConfig.gameActive || levelIndex !== gameConfig.currentLevel) {
+        return;
+    }
+    
+    // Désactiver toutes les zones du niveau actuel
+    const levelZones = document.querySelectorAll(`.zone[data-level="${levelIndex}"]`);
+    levelZones.forEach(zone => {
+        zone.classList.add('revealed');
+        zone.style.cursor = 'default';
+        zone.onclick = null;
+    });
+    
+    // Déterminer les positions des fantômes selon le niveau
+    const ghostCount = gameConfig.levels[levelIndex].ghosts;
+    gameConfig.ghostPositions = [];
+    
+    // Générer des positions uniques pour les fantômes
+    while (gameConfig.ghostPositions.length < ghostCount) {
+        const randomPos = Math.floor(Math.random() * 3);
+        if (!gameConfig.ghostPositions.includes(randomPos)) {
+            gameConfig.ghostPositions.push(randomPos);
+        }
+    }
+    
+    // Révéler le contenu de chaque zone
+    levelZones.forEach((zone, index) => {
+        if (gameConfig.ghostPositions.includes(index)) {
+            // Zone avec le fantôme
+            zone.classList.add('ghost');
+            zone.innerHTML = '👻';
+        } else {
+            // Zone avec la lumière
+            zone.classList.add('light');
+            zone.innerHTML = '💡';
+        }
+    });
+    
+    // Vérifier si le joueur a trouvé un fantôme
+    if (gameConfig.ghostPositions.includes(position)) {
+        // Perdu - trouvé un fantôme
+        loseGame();
+    } else {
+        // Gagné - trouvé une lumière
+        advanceToNextLevel();
+    }
+}
+
+// Passer au niveau suivant
+function advanceToNextLevel() {
+    // Marquer le niveau actuel comme réussi
+    gameConfig.levels[gameConfig.currentLevel].active = true;
+    
+    // Vérifier si c'est le dernier niveau
+    if (gameConfig.currentLevel === gameConfig.levels.length - 1) {
+        // Dernier niveau atteint - cashout automatique
+        setTimeout(() => {
+            winGame(gameConfig.levels[gameConfig.currentLevel].multiplier);
+        }, 1000);
+        return;
+    }
+    
+    // Passer au niveau suivant
+    gameConfig.currentLevel++;
+    
+    // Mettre à jour le niveau max atteint dans les statistiques
+    if (gameConfig.currentLevel > gameConfig.stats.maxLevelReached) {
+        gameConfig.stats.maxLevelReached = gameConfig.currentLevel;
+    }
+    
+    // Mettre à jour l'affichage
+    updateGameDisplay();
+    
+    // Activer les zones du nouveau niveau après un délai
+    setTimeout(() => {
+        activateLevelZones(gameConfig.currentLevel);
+    }, 1000);
+}
+
+// Gagner la partie (cashout)
+function winGame(multiplier = null) {
+    if (!gameConfig.gameActive) return;
+    
+    // Utiliser le multiplicateur du niveau actuel si aucun n'est spécifié
+    if (!multiplier) {
+        multiplier = gameConfig.levels[gameConfig.currentLevel].multiplier;
+    }
+    
+    // Calculer les gains
+    const winAmount = gameConfig.currentBet * multiplier;
+    
+    // Ajouter les gains au solde
+    gameConfig.balance += winAmount;
+    
+    // Mettre à jour les statistiques
+    gameConfig.stats.totalWins += winAmount;
+    
+    if (winAmount > gameConfig.stats.biggestWin) {
+        gameConfig.stats.biggestWin = winAmount;
+    }
+    
+    // Ajouter à l'historique
+    gameConfig.stats.gameHistory.push({
+        result: 'win',
+        level: gameConfig.currentLevel + 1,
+        amount: winAmount,
+        timestamp: new Date().toISOString()
+    });
+    
+    // Garder seulement les 50 dernières parties
+    if (gameConfig.stats.gameHistory.length > 50) {
+        gameConfig.stats.gameHistory = gameConfig.stats.gameHistory.slice(-50);
+    }
+    
+    // Terminer le jeu
+    endGame();
+    
+    // Afficher le message de gain
+    showMessage(`FÉLICITATIONS !`, `Vous avez gagné ${winAmount.toFixed(2)} € !`, 'win');
+    
+    // Sauvegarder les statistiques
+    saveStats();
+    updateStatsDisplay();
+}
+
+// Perdre la partie
+function loseGame() {
+    if (!gameConfig.gameActive) return;
+    
+    // Mettre à jour les statistiques
+    gameConfig.stats.totalLosses += gameConfig.currentBet;
+    
+    // Ajouter à l'historique
+    gameConfig.stats.gameHistory.push({
+        result: 'loss',
+        level: gameConfig.currentLevel + 1,
+        amount: gameConfig.currentBet,
+        timestamp: new Date().toISOString()
+    });
+    
+    // Garder seulement les 50 dernières parties
+    if (gameConfig.stats.gameHistory.length > 50) {
+        gameConfig.stats.gameHistory = gameConfig.stats.gameHistory.slice(-50);
+    }
+    
+    // Terminer le jeu
+    endGame();
+    
+    // Afficher le message de perte
+    showMessage(`DOMMAGE !`, `Vous avez trouvé le fantôme et perdu ${gameConfig.currentBet.toFixed(2)} €.`, 'loss');
+    
+    // Sauvegarder les statistiques
+    saveStats();
+    updateStatsDisplay();
+}
+
+// Terminer la partie
+function endGame() {
+    gameConfig.gameActive = false;
+    gameConfig.cashoutAvailable = false;
+    updateGameDisplay();
+}
+
+// Cashout (encaisser)
+function cashOut() {
+    if (!gameConfig.gameActive || !gameConfig.cashoutAvailable) return;
+    
+    winGame();
+}
+
+// Afficher un message
+function showMessage(title, text, type) {
+    messageElement.className = `message ${type}`;
+    messageElement.innerHTML = `
+        <h2>${title}</h2>
+        <p>${text}</p>
+        <button class="message-btn" onclick="closeMessage()">REJOUER</button>
+    `;
+    messageElement.style.display = 'block';
+}
+
+// Fermer le message
+function closeMessage() {
+    messageElement.style.display = 'none';
+    
+    // Après avoir fermé le message, permettre de rejouer immédiatement
+    // Réinitialiser les zones pour une nouvelle partie
+    resetAllZones();
+    
+    // Réinitialiser l'état des niveaux visuellement
+    gameConfig.levels.forEach((level, index) => {
+        const levelElement = document.getElementById(`level-${index}`);
+        if (levelElement) {
+            levelElement.classList.remove('active', 'passed', 'failed');
+        }
+    });
+    
+    // Mettre à jour l'affichage pour montrer que le jeu est prêt
+    updateGameDisplay();
+}
+
+// Réinitialiser les statistiques
+function resetStats() {
+    if (confirm("Voulez-vous vraiment réinitialiser toutes les statistiques ?")) {
+        gameConfig.stats = {
+            gamesPlayed: 0,
+            totalWins: 0,
+            totalLosses: 0,
+            biggestWin: 0,
+            maxLevelReached: 0,
+            gameHistory: []
+        };
+        
+        saveStats();
+        updateStatsDisplay();
+    }
+}
+
+// Initialiser le jeu au chargement de la page
+window.onload = function() {
+    loadStats();
+    initializeGameBoard();
+    updateGameDisplay();
+    
+    // Ajouter un bouton de réinitialisation des statistiques (caché)
+    const resetButton = document.createElement('button');
+    resetButton.textContent = 'Réinitialiser les statistiques';
+    resetButton.style.position = 'fixed';
+    resetButton.style.bottom = '10px';
+    resetButton.style.right = '10px';
+    resetButton.style.padding = '5px 10px';
+    resetButton.style.background = 'rgba(255, 0, 0, 0.3)';
+    resetButton.style.color = 'white';
+    resetButton.style.border = 'none';
+    resetButton.style.borderRadius = '5px';
+    resetButton.style.cursor = 'pointer';
+    resetButton.style.fontSize = '0.8rem';
+    resetButton.style.zIndex = '1000';
+    resetButton.onclick = resetStats;
+    document.body.appendChild(resetButton);
+};
+    </script>
+</body>
+</html>

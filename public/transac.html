@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Dépôt</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #111;
+      color: #fff;
+      display: flex;
+      height: 100vh;
+      align-items: center;
+      justify-content: center;
+    }
+    .box {
+      background: #1c1c1c;
+      padding: 20px;
+      border-radius: 8px;
+      width: 300px;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+      border: none;
+    }
+    button {
+      background: #00c853;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div class="box">
+  <h3>Dépôt crypto</h3>
+  <input type="email" id="email" placeholder="Votre email" required>
+  <input type="number" id="amount" placeholder="Montant en USD" min="5">
+  <button onclick="deposit()">Déposer</button>
+</div>
+
+<script>
+async function deposit() {
+  const email = document.getElementById('email').value;
+  const amount = document.getElementById('amount').value;
+
+  if (!email || !amount || amount < 5) {
+    alert("Email requis et montant minimum : 5 USD");
+    return;
+  }
+
+  try {
+    // Ensure user exists
+    const userRes = await fetch('http://localhost:3000/api/user/ensure', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+
+    const userData = await userRes.json();
+    if (!userData._id) {
+      alert("Erreur lors de la création de l'utilisateur");
+      return;
+    }
+
+    // Create payment
+    const paymentRes = await fetch('http://localhost:3000/api/payment/create', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ amount, currency: 'USDT', userId: userData._id })
+    });
+
+    const paymentData = await paymentRes.json();
+
+    if (paymentData.paymentUrl) {
+      window.location.href = paymentData.paymentUrl;
+    } else {
+      alert("Erreur lors du dépôt: " + (paymentData.message || "Inconnue"));
+    }
+  } catch (error) {
+    console.error('Erreur:', error);
+    alert("Erreur réseau");
+  }
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escape the Ghost - Jeu de Portes</title>
+    <style>
+        /* Reset et variables CSS */
+        :root {
+            --primary-color: #6c5ce7;
+            --secondary-color: #a29bfe;
+            --dark-color: #18181a;
+            --accent-color: #00b894;
+            --danger-color: #d63031;
+            --text-light: #f5f6fa;
+            --text-dark: #2d3436;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            
+        }
+
+        body {
+            background-color: #f5f6fa;
+            color: var(--text-dark);
+            line-height: 1.6;
+            background-color: #2d3436;
+        }
+
+        /* En-tête */
+        header {
+            padding: 1rem 2rem;
+            background: var(--dark-color);
+            color: var(--text-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--box-shadow);
+        }
+
+        .header-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .balance-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .balance-amount {
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+
+        .deposit-btn {
+            padding: 0.5rem 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .deposit-btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        /* Contenu principal */
+        .game-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .game-title {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            font-size: 2rem;
+        }
+
+        .instructions {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+            box-shadow: var(--box-shadow);
+            text-align: center;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Zone de jeu */
+        .doors-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .door {
+            position: relative;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            aspect-ratio: 3/4;
+        }
+
+        .door:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .door img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.3s ease;
+        }
+
+        .door:hover img {
+            border: 3px solid var(--accent-color);
+        }
+
+        /* Zone de pari */
+        .bet-section {
+            background-color: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .bet-title {
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .bet-input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            margin-bottom: 1rem;
+            border: 2px solid #dfe6e9;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .bet-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .submit-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .doors-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            header {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+   <header>
+       <h1 class="header-title">Escape the Ghost 👻</h1>
+       <div class="balance-container">
+           <strong>Solde:</strong>
+           <span class="balance-amount" id="Solde">10</span>
+           <button class="deposit-btn" onclick="window.location.href='/transac.html'">Déposer 💵</button>
+       </div>
+   </header>
+   
+   <main class="game-container">
+       <h2 class="game-title">Escapes from Ghosts</h2>
+       
+       <div class="instructions">
+           <p>Placez votre mise et choisissez la bonne porte pour échapper au fantôme! 👻</p>
+       </div>
+       <div class="doors-container">
+           <div class="door" data-door="1">
+               <img src="ima/door2.jpg" alt="Porte 1">
+           </div>
+           <div class="door" data-door="2">
+               <img src="ima/door2.jpg" alt="Porte 2">
+           </div>
+           <div class="door" data-door="3">
+               <img src="ima/door2.jpg" alt="Porte 3">
+           </div>
+           <div class="door" data-door="4">
+               <img src="ima/door2.jpg" alt="Porte 4">
+               </div>
+       </div>
+       <p id="message2"></p>
+       <div class="bet-section">
+           <h3 class="bet-title">Faites votre pari</h3>
+           <input type="number" class="bet-input" placeholder="Montant de votre mise" min="1" id="Mise">
+           <button class="submit-btn" onclick="Jouer()">Jouer !</button>
+           <p id="message"></p>
+       </div>
+   </main>
+   <script src="Door.js"></script>
+</body>
+</html>
