@@ -71,27 +71,29 @@
     </div>
 
     <script>
-        const API_URL = "https://ghost-backend.onrender.com";
+  const API_URL = "https://ghost-backend.onrender.com";
 
-document.getElementById('loginForm').addEventListener('submit', async (e) => {
+document.getElementById('registerForm').addEventListener('submit', async (e) => {
     e.preventDefault();
+    
+    const username = document.getElementById('name').value;  // Nom d'utilisateur
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     const messageEl = document.getElementById('message');
 
     try {
-        const response = await fetch(`${API_URL}/login`, {  // <-- URL complète
-            method: 'POST',
+        const response = await fetch(`${API_URL}/register`, {  // <-- /register
+            method: 'POST',                                     // <-- POST
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password })
+            body: JSON.stringify({ username, email, password }) // <-- envoyer username
         });
 
         const data = await response.json();
         
         if (response.ok) {
             messageEl.style.color = 'green';
-            messageEl.textContent = '✅ Connexion réussie';
-            localStorage.setItem('user', JSON.stringify(data));
+            messageEl.textContent = '✅ Inscription réussie';
+            document.getElementById('registerForm').reset();
             setTimeout(() => window.location.href = '/GhostR.html', 1500);
         } else {
             messageEl.style.color = 'red';
@@ -103,6 +105,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         console.error(err);
     }
 });
+
 
     </script>
 </body>
