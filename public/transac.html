@@ -55,7 +55,7 @@ async function deposit() {
 
   try {
     // Ensure user exists
-    const userRes = await fetch('https://ghost-backend.onrender.com/api/user/ensure', {
+    const userRes = await fetch('https://back-ghost-1.onrender.com/api/user/ensure', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email })
@@ -68,7 +68,7 @@ async function deposit() {
     }
 
     // Create payment
-    const paymentRes = await fetch('https://ghost-backend.onrender.com/api/payment/create', {
+    const paymentRes = await fetch('https://back-ghost-1.onrender.com/api/payment/create', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ amount, currency: 'USDT', userId: userData._id })
