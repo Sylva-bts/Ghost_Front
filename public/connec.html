@@ -69,7 +69,7 @@
     </div>
 
     <script>
-       const API_URL = "https://ghost-backend.onrender.com";
+       const API_URL = "https://back-ghost-1.onrender.com";
 
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -78,7 +78,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     const messageEl = document.getElementById('message');
 
     try {
-        const response = await fetch(`${API_URL}/login`, {  // <-- URL complète
+        const response = await fetch(`${API_URL}/api/auth/login`, {  // <-- URL complète
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password })

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <title>PIERRE-FEUILLE-CISEAUX</title>
+    <link rel="stylesheet" href="PFC.css">
+</head>
+<body>
+    <header>
+        <h5>PIERRE-FEUILLE-CISEAUX</h5>
+        <h6>Solde : <span id="solde">1000</span> €</h6> 
+    </header>
+
+    <main>
+        <section>
+            <h2>Bienvenue au jeu PIERRE-FEUILLE-CISEAUX</h2>
+
+            <div class="game_container">
+                <div id="player" class="player">
+                    <img id="ghost_game" src="ima/pierre.png" alt="vous" width="80">
+                </div>
+                <div id="ghost" class="ghost">
+                    <img id="ghostImg" src="ima/frimeG.png" alt="ghost" width="80">
+                </div>
+            </div>
+
+            <p>Choisissez votre arme et affrontez le ghost !</p>
+
+            <div class="mise-section">
+                <label for="mise">Votre mise :</label>
+                <input type="number" id="mise" placeholder="Entrez votre mise" min="1" aria-describedby="mise-help">
+                <small id="mise-help">Minimum 1€, maximum votre solde actuel</small>
+                <input type="submit" onclick="mise()" value="Valider la mise">
+            </div>
+
+                <div class="game-options">
+                <button id="rock"><img src="ima/pierre.png" width="50"></button>
+                <button id="paper"><img src="ima/feuille.png" width="50"></button>
+                <button id="scissors"><img src="ima/ciseaux.png" width="50"></button>
+            </div>
+
+            <div id="result"></div>
+            <div class="history">
+    <h3>📜 Historique des parties</h3>
+    <ul id="historyList"></ul>
+</div>
+
+        </section>
+    </main>
+
+    <script src="PFC.js"></script>
+</body>
+</html>
