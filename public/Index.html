@@ -171,7 +171,7 @@ body{
     background-color:rgba(0, 0, 0, 0.479);
     gap: 50px;
 }
-.game1, .game2, .game3 {
+.game1, .game2, .game3, .game4 {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -179,8 +179,8 @@ body{
 
     width: 100%;
     max-width: 350px;
-    min-height: 400px;
-
+    max-height: 800px;
+    
     padding: 24px;
     gap: 16px;
 
@@ -198,7 +198,7 @@ body{
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.game1:hover, .game2:hover, .game3:hover {
+.game1:hover, .game2:hover, .game3:hover, .game4:hover {
     transform: translateY(-6px);
     box-shadow:
         0 16px 35px rgba(0, 0, 0, 0.35),
@@ -412,6 +412,15 @@ Suspense, frissons, et récompenses t’attendent dans ce jeu palpitant.</p>
 Misez, regardez la cote s’envoler à toute vitesse… osez encaisser avant l’explosion et repartez avec vos gains 💥</p>
 <button onclick="location.href='inscri.html'">Jouer maintenant</button>
 <button onclick="location.href='crash.html'">Jouer la démo</button>
+                </div>
+                <div class="game4">
+                    <h3>Ghost of fortune</h3>
+                    <img src="ima/gof.jpeg" alt="ghost_of_fortune_image" width="200px" height="250px">
+                    <p>Plongez dans l’univers mystérieux de Ghost of Fortune 👻.
+À chaque choix, le spectre rôde… évitez le Ghost pour continuer votre ascension et multiplier vos gains.
+Un seul mauvais pas, et le fantôme vous fait tout perdre.</p>
+<button onclick="location.href='inscri.html'">Jouer maintenant</button>
+<button onclick="location.href='ghost_of_fortune.html'">Jouer la démo</button>
                 </div>
             </div>
             <div class="info-section">

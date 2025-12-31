@@ -1,0 +1,258 @@
+/* Reset */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Body */
+body {
+    background: radial-gradient(circle at top, rgb(40, 0, 55), rgb(10, 0, 15));
+    color: rgb(209, 174, 246);
+    min-height: 100vh;
+}
+
+/* Header */
+header {
+    padding: 15px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(90deg, rgb(36, 3, 47), rgb(60, 10, 80));
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+header h5 {
+    font-size: 18px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+header h6 {
+    font-size: 15px;
+    color: #ffd700;
+}
+
+/* Main */
+main {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    padding: 15px;
+}
+
+section {
+    background: rgba(20, 5, 30, 0.95);
+    padding: 25px;
+    width: 420px;
+    border-radius: 16px;
+    box-shadow: 0 0 30px rgba(160, 100, 255, 0.25);
+    text-align: center;
+}
+
+section h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+/* Game container */
+.game_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 80px;
+    margin: 25px 0;
+    padding: 20px;
+    background: linear-gradient(180deg, rgb(36, 3, 47), rgb(20, 2, 30));
+    border-radius: 14px;
+}
+
+/* Player & Ghost */
+.player, .ghost {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 120px;
+}
+
+.player img, .ghost img {
+    max-width: 80px;
+}
+
+/* Mise section */
+.mise-section {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.mise-section label {
+    font-size: 16px;
+    font-weight: bold;
+    color: rgb(209, 174, 246);
+}
+
+.mise-section small {
+    font-size: 12px;
+    color: rgba(209, 174, 246, 0.7);
+    text-align: center;
+}
+
+/* Inputs */
+input[type="number"] {
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid rgb(209, 174, 246);
+    border-radius: 6px;
+    width: 200px;
+    text-align: center;
+    background: transparent;
+    color: #fff;
+    transition: border-color 0.3s ease;
+}
+
+input[type="submit"] {
+    margin-top: 10px;
+    padding: 10px 25px;
+    font-size: 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: linear-gradient(90deg, #9b59b6, #6c2bd9);
+    color: #fff;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+input[type="submit"]:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(155, 89, 182, 0.6);
+}
+
+/* Game options */
+.game-options {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+button {
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid transparent;
+    border-radius: 50%;
+    padding: 10px;
+    cursor: pointer;
+    transition: transform 0.2s, border 0.2s;
+}
+
+button:hover {
+    transform: scale(1.15);
+    border-color: #ffd700;
+}
+
+button img {
+    width: 50px;
+}
+
+/* Résultat */
+#result {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    min-height: 24px;
+}
+
+/* Historique */
+.history {
+    margin-top: 30px;
+    text-align: left;
+}
+
+.history h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.history ul {
+    list-style: none;
+    padding: 0;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.history li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    margin-bottom: 5px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    font-size: 14px;
+}
+
+.history li.win {
+    background: rgba(34, 197, 94, 0.2);
+    border-left: 4px solid #22c55e;
+}
+
+.history li.lose {
+    background: rgba(239, 68, 68, 0.2);
+    border-left: 4px solid #ef4444;
+}
+
+.history li.draw {
+    background: rgba(156, 163, 175, 0.2);
+    border-left: 4px solid #9ca3af;
+}
+
+/* Animations images */
+#ghostImg, #ghost_game {
+    opacity: 0;
+    transition: opacity 0.6s ease-in, transform 0.4s;
+}
+
+#ghost_game {
+    transform: scale(1.1);
+}
+
+/* ========================= */
+/* 📱 RESPONSIVE */
+/* ========================= */
+
+@media (max-width: 600px) {
+
+    header {
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+    }
+
+    section {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .game_container {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .player, .ghost {
+        width: 100px;
+        height: 100px;
+    }
+
+    button img {
+        width: 45px;
+    }
+
+    input[type="number"] {
+        width: 100%;
+    }
+}
