@@ -1,39 +1,69 @@
-<!DOCTYPE html>
-<html lang="en">    
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/connec.css">
-    <title>Connexion</title>
-</head>
-<body>
-    <style>
-        body {
-            background-image: url('images/bg-connec.jpg');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            font-family: Arial, sans-serif;
-            color: #333;
-        }
-        .container {
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 20px;
-            margin: 50px auto;
-            width: 300px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h2 {
-            text-align: center;
-        }
-        label {
-            display: block;
-            margin-top: 10px;
-        }
         input[type="text"], input[type="password"] {
-            width: 100%;
+    <script>
+    const API_URL = "https://back-ghost-1.onrender.com";
+
+    const loginForm = document.getElementById('loginForm');
+    const messageEl = document.getElementById('message');
+    const submitBtn = loginForm.querySelector('button[type="submit"]');
+
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        submitBtn.disabled = true;
+        messageEl.style.color = 'red';
+        messageEl.textContent = '';
+
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+
+        if (!email) {
+            messageEl.textContent = 'Entrez une adresse email valide';
+            submitBtn.disabled = false;
+            return;
+        }
+
+        if (password.length < 6) {
+            messageEl.textContent = 'Mot de passe trop court (min 6 caractères)';
+            submitBtn.disabled = false;
+            return;
+        }
+
+        try {
+            const response = await fetch(`${API_URL}/api/auth/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                messageEl.style.color = 'green';
+                messageEl.textContent = '✅ Connexion réussie';
+
+                // Attendre le token du backend et le stocker
+                if (data.token) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.user || {}));
+                } else {
+                    // Certains backends renvoient l'objet utilisateur seul
+                    localStorage.setItem('user', JSON.stringify(data));
+                }
+
+                setTimeout(() => window.location.href = '/GhostR.html', 900);
+            } else {
+                messageEl.style.color = 'red';
+                messageEl.textContent = '❌ ' + (data.error || data.message || JSON.stringify(data));
+            }
+        } catch (err) {
+            messageEl.style.color = 'red';
+            messageEl.textContent = '❌ Erreur réseau ou serveur';
+            console.error(err);
+        } finally {
+            submitBtn.disabled = false;
+        }
+    });
+
+    </script>
             padding: 8px;
             margin-top: 5px;
             border: 1px solid #ccc;
