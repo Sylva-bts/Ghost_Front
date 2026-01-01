@@ -30,34 +30,57 @@
         try {
             const response = await fetch(`${API_URL}/api/auth/login`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json', 'Accept': '*/*' },
                 body: JSON.stringify({ email, password })
             });
 
-            const data = await response.json();
+            // Essayez de parser JSON, sinon récupérer le texte brut
+            let data;
+            const contentType = response.headers.get('content-type') || '';
+            try {
+                if (contentType.includes('application/json')) {
+                    data = await response.json();
+                } else {
+                    const text = await response.text();
+                    data = { __raw: text };
+                }
+            } catch (parseErr) {
+                const text = await response.text().catch(() => '');
+                data = { __raw: text };
+                console.warn('Response parsing failed', parseErr);
+            }
+
+            // Log complet pour aider le debug côté backend
+            console.group('Login response');
+            console.log('status', response.status);
+            console.log('headers', [...response.headers.entries()]);
+            console.log('body', data);
+            console.groupEnd();
 
             if (response.ok) {
                 messageEl.style.color = 'green';
                 messageEl.textContent = '✅ Connexion réussie';
 
-                // Attendre le token du backend et le stocker
                 if (data.token) {
                     localStorage.setItem('token', data.token);
                     localStorage.setItem('user', JSON.stringify(data.user || {}));
+                } else if (data.__raw) {
+                    // stocker le texte brut si besoin
+                    localStorage.setItem('user', JSON.stringify({ info: data.__raw }));
                 } else {
-                    // Certains backends renvoient l'objet utilisateur seul
                     localStorage.setItem('user', JSON.stringify(data));
                 }
 
                 setTimeout(() => window.location.href = '/GhostR.html', 900);
             } else {
                 messageEl.style.color = 'red';
-                messageEl.textContent = '❌ ' + (data.error || data.message || JSON.stringify(data));
+                const errMsg = data && (data.error || data.message || data.__raw) ? (data.error || data.message || data.__raw) : `Status ${response.status}`;
+                messageEl.textContent = '❌ ' + errMsg;
             }
         } catch (err) {
             messageEl.style.color = 'red';
-            messageEl.textContent = '❌ Erreur réseau ou serveur';
-            console.error(err);
+            messageEl.textContent = '❌ Erreur réseau ou serveur (voir console)';
+            console.error('Fetch error', err);
         } finally {
             submitBtn.disabled = false;
         }
