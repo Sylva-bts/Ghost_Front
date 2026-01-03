@@ -90,7 +90,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
             messageEl.style.color = 'green';
             messageEl.textContent = '✅ Connexion réussie';
             localStorage.setItem('user', JSON.stringify(data));
-            setTimeout(() => window.location.href = '/GhostR.html', 1500);
+            setTimeout(() => window.location.href = './GhostR.html', 1500);
         } else {
             messageEl.style.color = 'red';
             messageEl.textContent = '❌ ' + (data.error || data.message);
