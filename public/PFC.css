@@ -1,239 +1,210 @@
-/* CONTENEUR 3D DU CARROUSEL */
-.section_game {
-    perspective: 1200px;
-    width: 100%;
-    height: 850px;
-    margin: 60px auto;
-    position: relative;
-    overflow: visible;
-    animation: none; /* On supprime l'animation linéaire précédente */
+/* ===== RESET MODERNE ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-/* Conteneur des cartes en 3D */
-.carousel-3d {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    transform-style: preserve-3d;
-    animation: rotateCarousel 30s infinite linear;
-    transform-origin: center center;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+:root {
+    --bg-main: #0b0b14;
+    --bg-card: rgba(255, 255, 255, 0.08);
+    --accent: #00ffcc;
+    --accent-soft: rgba(0, 255, 204, 0.35);
+    --danger: #ff4d4d;
+    --text-main: #ffffff;
+    --text-muted: rgba(255, 255, 255, 0.7);
+    --radius: 18px;
 }
 
-/* Pause sur hover */
-.carousel-3d:hover {
-    animation-play-state: paused;
-}
-
-/* Animation de rotation 3D */
-@keyframes rotateCarousel {
-    0% {
-        transform: translate(-50%, -50%) rotateY(0deg);
-    }
-    100% {
-        transform: translate(-50%, -50%) rotateY(360deg);
-    }
-}
-
-/* STYLE DES CARTES 3D */
-.game1, .game2, .game3, .game4, .game5 {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 320px;
-    min-height: 780px;
-    transform-style: preserve-3d;
-    backface-visibility: visible;
+/* ===== CORPS ===== */
+body {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at top, #1b1b3a, transparent 60%),
+        linear-gradient(135deg, #05050b, #111125);
+    color: var(--text-main);
+    font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    overflow: hidden;
-    padding: 30px 25px;
-    gap: 20px;
-    background: linear-gradient(145deg, rgba(40, 40, 80, 0.25), rgba(20, 20, 40, 0.4));
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border-radius: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: 
-        0 25px 50px rgba(0, 0, 0, 0.5),
-        inset 0 1px 0 rgba(255, 255, 255, 0.15),
-        0 0 40px rgba(93, 156, 255, 0.3);
-    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* Positionnement 3D des cartes */
-.game1 {
-    transform: translate(-50%, -50%) rotateY(0deg) translateZ(500px);
-}
-
-.game2 {
-    transform: translate(-50%, -50%) rotateY(72deg) translateZ(500px);
-}
-
-.game3 {
-    transform: translate(-50%, -50%) rotateY(144deg) translateZ(500px);
-}
-
-.game4 {
-    transform: translate(-50%, -50%) rotateY(216deg) translateZ(500px);
-}
-
-.game5 {
-    transform: translate(-50%, -50%) rotateY(288deg) translateZ(500px);
-}
-
-/* Effet au survol */
-.game1:hover, .game2:hover, .game3:hover, .game4:hover, .game5:hover {
-    transform: translate(-50%, -50%) scale(1.1) translateZ(550px) !important;
-    box-shadow: 
-        0 35px 70px rgba(0, 0, 0, 0.7),
-        inset 0 1px 0 rgba(255, 255, 255, 0.25),
-        0 0 60px rgba(93, 156, 255, 0.5);
-    z-index: 100;
-}
-
-/* Contenu des cartes */
-.game1 h3, .game2 h3, .game3 h3, .game4 h3, .game5 h3 {
-    font-size: 1.8rem;
+/* ===== HEADER ===== */
+header {
     text-align: center;
-    margin-bottom: 10px;
-    background: linear-gradient(90deg, #ff7e5f, #feb47b);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    padding: 24px;
+    backdrop-filter: blur(10px);
+    background: rgba(0, 0, 0, 0.45);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.game1 img, .game2 img, .game3 img, .game4 img, .game5 img {
-    width: 100%;
-    max-width: 250px;
-    height: 280px;
-    object-fit: cover;
-    border-radius: 16px;
-    border: 2px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-    transition: transform 0.3s ease;
+header h1 {
+    font-size: 2.1rem;
+    font-weight: 700;
+    letter-spacing: 1px;
 }
 
-.game1 img:hover, .game2 img:hover, .game3 img:hover, .game4 img:hover, .game5 img:hover {
-    transform: scale(1.05);
+header h2 {
+    margin-top: 8px;
+    font-size: 1.1rem;
+    color: var(--accent);
 }
 
-.game1 p, .game2 p, .game3 p, .game4 p, .game5 p {
-    text-align: center;
-    line-height: 1.6;
-    font-size: 1rem;
-    color: rgba(255, 255, 255, 0.9);
-    flex-grow: 1;
-    margin: 15px 0;
-}
-
-/* Boutons améliorés */
-.game1 button, .game2 button, .game3 button, .game4 button, .game5 button {
-    width: 100%;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 12px;
-    font-weight: 600;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
+/* ===== MAIN ===== */
+main {
+    flex: 1;
     display: flex;
-    align-items: center;
     justify-content: center;
-    gap: 10px;
+    align-items: flex-start;
+    padding: 30px 15px;
 }
 
-/* Premier bouton */
-.game1 button:first-of-type,
-.game2 button:first-of-type,
-.game3 button:first-of-type,
-.game4 button:first-of-type,
-.game5 button:first-of-type {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
+/* ===== CARD JEU ===== */
+section {
+    width: 100%;
+    max-width: 420px;
+    padding: 32px;
+    text-align: center;
+    border-radius: var(--radius);
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.12),
+        rgba(255, 255, 255, 0.04)
+    );
+    backdrop-filter: blur(18px);
+    box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.6),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+    animation: fadeUp 0.6s ease;
 }
 
-/* Deuxième bouton */
-.game1 button:last-of-type,
-.game2 button:last-of-type,
-.game3 button:last-of-type,
-.game4 button:last-of-type,
-.game5 button:last-of-type {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    color: white;
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.game1 button:hover, .game2 button:hover, .game3 button:hover, 
-.game4 button:hover, .game5 button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-    filter: brightness(1.1);
+section h2 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
 }
 
-/* Indicateur de rotation */
-.carousel-indicator {
-    position: absolute;
-    bottom: -50px;
-    left: 50%;
-    transform: translateX(-50%);
+p {
+    color: var(--text-muted);
+    margin-bottom: 18px;
+}
+
+/* ===== ZONE JOUEURS ===== */
+.game_container {
     display: flex;
-    gap: 15px;
-    z-index: 10;
+    justify-content: space-between;
+    align-items: center;
+    margin: 28px 0;
 }
 
-.carousel-indicator span {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.3);
+#player img,
+#ghost img {
+    width: 80px;
+    transition: transform 0.35s ease, filter 0.35s ease;
+}
+
+#player img:hover {
+    transform: scale(1.15);
+}
+
+#ghost img {
+    filter: drop-shadow(0 0 14px rgba(255, 77, 77, 0.7));
+}
+
+/* ===== INPUT MISE ===== */
+input[type="number"] {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(0, 0, 0, 0.35);
+    color: #fff;
+    font-size: 16px;
+    outline: none;
+    transition: 0.25s;
+}
+
+input[type="number"]:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+/* ===== BOUTON VALIDER ===== */
+input[type="submit"] {
+    width: 100%;
+    margin-top: 12px;
+    padding: 14px;
+    border-radius: 14px;
+    border: none;
+    background: linear-gradient(135deg, #00ffcc, #00c9a7);
+    color: #001f1a;
+    font-size: 16px;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: transform 0.25s, box-shadow 0.25s;
 }
 
-.carousel-indicator span.active {
-    background: #5d9cff;
-    transform: scale(1.3);
-    box-shadow: 0 0 15px #5d9cff;
+input[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 255, 204, 0.45);
 }
 
-/* Responsive */
-@media (max-width: 1200px) {
-    .game1, .game2, .game3, .game4, .game5 {
-        width: 280px;
-        min-height: 750px;
-    }
-    
-    .game1 { transform: translate(-50%, -50%) rotateY(0deg) translateZ(400px); }
-    .game2 { transform: translate(-50%, -50%) rotateY(72deg) translateZ(400px); }
-    .game3 { transform: translate(-50%, -50%) rotateY(144deg) translateZ(400px); }
-    .game4 { transform: translate(-50%, -50%) rotateY(216deg) translateZ(400px); }
-    .game5 { transform: translate(-50%, -50%) rotateY(288deg) translateZ(400px); }
+/* ===== BOUTONS JEU ===== */
+.game-options {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 22px;
 }
 
-@media (max-width: 768px) {
-    .section_game {
-        height: 700px;
+.game-options button {
+    flex: 1;
+    padding: 14px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.08);
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.game-options button:hover {
+    background: var(--accent-soft);
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(0, 255, 204, 0.35);
+}
+
+/* ===== RESULTAT ===== */
+#result {
+    margin-top: 22px;
+    min-height: 26px;
+    font-size: 1.05rem;
+    font-weight: 500;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 480px) {
+    section {
+        padding: 24px;
     }
-    
-    .game1, .game2, .game3, .game4, .game5 {
-        width: 250px;
-        min-height: 680px;
-        padding: 20px 15px;
+
+    #player img,
+    #ghost img {
+        width: 65px;
     }
-    
-    .game1 { transform: translate(-50%, -50%) rotateY(0deg) translateZ(300px); }
-    .game2 { transform: translate(-50%, -50%) rotateY(72deg) translateZ(300px); }
-    .game3 { transform: translate(-50%, -50%) rotateY(144deg) translateZ(300px); }
-    .game4 { transform: translate(-50%, -50%) rotateY(216deg) translateZ(300px); }
-    .game5 { transform: translate(-50%, -50%) rotateY(288deg) translateZ(300px); }
-    
-    .carousel-3d {
-        animation-duration: 40s;
-    }
+}
+.section_game::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+}
+.section_game::-webkit-scrollbar-track {
+    background: transparent;
 }
