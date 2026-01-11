@@ -1,0 +1,436 @@
+/* ================================
+   Planète du Ghost - Casino moderne
+   Palette: violet / indigo sur fond sombre
+   Effets: néon, verre, particules, hover 3D
+   Responsive: grille fluide, nav compacte
+=================================== */
+
+/* -------- Variables & Reset -------- */
+:root {
+  --bg-1: radial-gradient(circle at 20% 50%, rgba(138, 43, 226, 0.40) 0%, transparent 50%);
+  --bg-2: radial-gradient(circle at 80% 20%, rgba(148, 0, 211, 0.30) 0%, transparent 50%);
+  --bg-3: radial-gradient(circle at 40% 80%, rgba(75, 0, 130, 0.30) 0%, transparent 50%);
+  --bg-4: linear-gradient(135deg, #0a0a0a 0%, #1a0a2a 50%, #0a0a1a 100%);
+
+  --text: #e8e8ff;
+  --muted: #bfbfe9;
+  --primary: #9b5cf6;      /* violet */
+  --primary-2: #7a3bd1;    /* indigo/violet profond */
+  --accent: #e74bd2;       /* magenta lumineux */
+  --success: #35e1a1;
+  --warning: #f7b733;
+
+  --surface: rgba(18, 10, 34, 0.55); /* verre sombre */
+  --border: rgba(155, 92, 246, 0.25);
+
+  --shadow: 0 10px 25px rgba(0,0,0,0.35);
+  --glow: 0 0 12px rgba(155, 92, 246, 0.6), 0 0 24px rgba(155, 92, 246, 0.35);
+
+  --radius: 16px;
+  --radius-sm: 12px;
+
+  --maxw: 1200px;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Ubuntu, "Cantarell", Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  line-height: 1.6;
+  background: var(--bg-1), var(--bg-2), var(--bg-3), var(--bg-4);
+  overflow-x: hidden;
+}
+
+/* -------- Arrière-plan animé (parallax + glow) -------- */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: -10% -10%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+body::before {
+  background:
+    radial-gradient(circle at 15% 45%, rgba(138, 43, 226, 0.22) 0%, transparent 50%),
+    radial-gradient(circle at 82% 18%, rgba(148, 0, 211, 0.18) 0%, transparent 52%),
+    radial-gradient(circle at 42% 82%, rgba(75, 0, 130, 0.20) 0%, transparent 55%),
+    var(--bg-4);
+  filter: blur(2px);
+  animation: drift 22s ease-in-out infinite alternate;
+}
+
+body::after {
+  background:
+    radial-gradient(120px 120px at 30% 70%, rgba(155, 92, 246, 0.42) 8%, transparent 60%),
+    radial-gradient(160px 160px at 75% 25%, rgba(231, 75, 210, 0.35) 10%, transparent 62%);
+  mix-blend-mode: screen;
+  animation: shimmer 16s ease-in-out infinite alternate;
+}
+
+@keyframes drift {
+  0%   { transform: translate3d(0, 0, 0) scale(1); }
+  50%  { transform: translate3d(-1.5%, 1.5%, 0) scale(1.02); }
+  100% { transform: translate3d(2%, -1%, 0) scale(1.03); }
+}
+
+@keyframes shimmer {
+  0%   { transform: translate3d(0%, 0%, 0); filter: blur(0px) brightness(1); }
+  100% { transform: translate3d(2.5%, -2%, 0); filter: blur(1px) brightness(1.08); }
+}
+
+/* -------- Layout global -------- */
+main {
+  max-width: var(--maxw);
+  margin: 24px auto 64px;
+  padding: 0 20px;
+}
+
+/* -------- Header -------- */
+header {
+  position: sticky;
+  top: 0;
+  backdrop-filter: saturate(120%) blur(10px);
+  background: linear-gradient(180deg, rgba(10, 10, 26, 0.85), rgba(12, 10, 28, 0.55));
+  border-bottom: 1px solid var(--border);
+  z-index: 50;
+}
+
+header > div {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 20px;
+}
+
+header strong {
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  color: #fff;
+  text-shadow: 0 0 8px rgba(155, 92, 246, 0.45);
+}
+
+header img {
+  border-radius: 50%;
+  box-shadow: var(--glow);
+}
+
+/* Solde badge */
+header > div:last-of-type {
+  margin-left: auto;
+  gap: 8px;
+  color: var(--muted);
+}
+
+header > div:last-of-type strong {
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(155, 92, 246, 0.18), rgba(155, 92, 246, 0.08));
+  border: 1px solid var(--border);
+  box-shadow: 0 6px 18px rgba(155, 92, 246, 0.2);
+}
+
+/* -------- Navigation -------- */
+nav {
+  position: sticky;
+  top: 64px;
+  z-index: 40;
+  backdrop-filter: blur(8px);
+  background: rgba(18, 10, 34, 0.45);
+  border-bottom: 1px solid var(--border);
+}
+
+nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  list-style: none;
+  margin: 0;
+  padding: 10px 20px;
+}
+
+nav a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  background: rgba(24, 16, 44, 0.55);
+  border: 1px solid var(--border);
+  transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+
+nav a:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--glow);
+  background: radial-gradient(120% 120% at 20% 30%, rgba(155, 92, 246, 0.22), rgba(24,16,44,0.6));
+}
+
+/* -------- Titres -------- */
+h1, h2, h3 {
+  margin: 0 0 14px;
+  line-height: 1.25;
+}
+
+h1 {
+  font-size: clamp(2rem, 2.6vw + 1rem, 3rem);
+  font-weight: 900;
+  letter-spacing: 1px;
+  color: #fff;
+  text-shadow: 0 0 16px rgba(155, 92, 246, 0.45), 0 3px 18px rgba(0,0,0,0.4);
+}
+
+h2 {
+  font-size: clamp(1.4rem, 1.2vw + 1rem, 2rem);
+  font-weight: 800;
+  color: #f0e9ff;
+}
+
+h3 {
+  font-size: clamp(1.05rem, 0.9vw + 0.8rem, 1.3rem);
+  font-weight: 700;
+  color: #e7dcff;
+}
+
+/* -------- Sections / cartes -------- */
+section {
+  margin: 26px 0;
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+section::before {
+  content: "";
+  position: absolute;
+  inset: -20% -10%;
+  background: radial-gradient(300px 300px at 15% 10%, rgba(155, 92, 246, 0.15), transparent 60%);
+  filter: blur(6px);
+  opacity: 0.8;
+  animation: halo 12s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes halo {
+  0% { transform: translate3d(0, 0, 0); opacity: 0.6; }
+  100% { transform: translate3d(4%, 2%, 0); opacity: 0.9; }
+}
+
+/* -------- Bonus héro -------- */
+section:first-of-type h3 {
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(231, 75, 210, 0.6);
+}
+
+section:first-of-type img {
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  box-shadow: 0 10px 28px rgba(231, 75, 210, 0.25), 0 0 18px rgba(231, 75, 210, 0.35);
+  transition: transform 200ms ease, filter 200ms ease;
+}
+
+section:first-of-type img:hover {
+  transform: translateY(-3px) scale(1.02);
+  filter: saturate(115%);
+}
+
+/* -------- Grille des jeux -------- */
+section:nth-of-type(2) > div {
+  display: grid;
+  grid-template-columns: repeat( auto-fit, minmax(220px, 1fr) );
+  gap: 16px;
+  align-items: start;
+}
+
+article {
+  background: linear-gradient(180deg, rgba(26, 16, 52, 0.55), rgba(20, 12, 42, 0.55));
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  box-shadow: var(--shadow);
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+  position: relative;
+  overflow: hidden;
+}
+
+article::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(140px 140px at 80% 20%, rgba(155, 92, 246, 0.18), transparent 60%);
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+article:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(155, 92, 246, 0.25);
+  border-color: rgba(155, 92, 246, 0.45);
+}
+
+article:hover::after { opacity: 1; }
+
+article img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.35);
+  transition: transform 180ms ease, filter 180ms ease;
+}
+
+article img:hover {
+  transform: scale(1.03);
+  filter: saturate(115%);
+}
+
+article a {
+  display: grid;
+  place-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 700;
+  margin-top: 10px;
+}
+
+article a span {
+  display: inline-block;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, rgba(155, 92, 246, 0.25), rgba(155, 92, 246, 0.18));
+  border: 1px solid var(--border);
+  box-shadow: var(--glow);
+  transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+article a span:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 16px rgba(155, 92, 246, 0.55);
+  background: linear-gradient(180deg, rgba(155, 92, 246, 0.35), rgba(155, 92, 246, 0.26));
+}
+
+/* -------- Details accordéon -------- */
+details {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  background: rgba(24, 16, 44, 0.45);
+  margin: 10px 0;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+details:hover {
+  border-color: rgba(155, 92, 246, 0.45);
+  box-shadow: 0 0 20px rgba(155, 92, 246, 0.18);
+}
+
+summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: #fff;
+  outline: none;
+}
+
+details[open] {
+  background: rgba(24, 16, 44, 0.60);
+}
+
+/* -------- Footer -------- */
+footer {
+  margin-top: 40px;
+  padding: 24px 20px;
+  background: linear-gradient(180deg, rgba(12, 10, 28, 0.85), rgba(10, 8, 26, 0.75));
+  border-top: 1px solid var(--border);
+}
+
+footer p, footer address {
+  color: var(--muted);
+  margin: 8px 0;
+}
+
+footer a {
+  color: #cdb8ff;
+  text-decoration: none;
+  border-bottom: 1px dashed rgba(205, 184, 255, 0.4);
+  transition: color 160ms ease, border-color 160ms ease;
+}
+
+footer a:hover {
+  color: #ffffff;
+  border-color: rgba(205, 184, 255, 0.8);
+}
+
+/* -------- Utilitaires -------- */
+img { display: block; }
+
+strong { color: #fff; }
+
+::selection {
+  background: rgba(155, 92, 246, 0.45);
+  color: #fff;
+}
+
+/* -------- Responsive -------- */
+@media (max-width: 920px) {
+  nav ul { gap: 10px; }
+  nav a { padding: 8px 12px; }
+  header > div { padding: 10px 16px; }
+  section { padding: 18px; }
+}
+
+@media (max-width: 640px) {
+  h1 { font-size: clamp(1.8rem, 5vw, 2.4rem); }
+  header { position: sticky; top: 0; }
+  nav { top: 56px; }
+  section:nth-of-type(2) > div { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 420px) {
+  section:nth-of-type(2) > div { grid-template-columns: 1fr; }
+}
+
+/* -------- Bonus: particules légères -------- */
+.particles {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    radial-gradient(3px 3px at 10% 30%, rgba(255,255,255,0.15) 50%, transparent 51%),
+    radial-gradient(2px 2px at 80% 40%, rgba(255,255,255,0.12) 50%, transparent 51%),
+    radial-gradient(2px 2px at 30% 80%, rgba(255,255,255,0.10) 50%, transparent 51%);
+  animation: twinkle 5s ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+  0%   { opacity: 0.35; transform: translateY(0); }
+  100% { opacity: 0.65; transform: translateY(-1.5%); }
+}
+
+/* -------- Accessibilité focus -------- */
+a:focus-visible, button:focus-visible, summary:focus-visible {
+  outline: 2px solid rgba(155, 92, 246, 0.9);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
