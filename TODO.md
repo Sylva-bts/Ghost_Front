@@ -1,4 +1,5 @@
-# TODO: Add User Name to Index1.html Header
+# TODO: Restructure Index1.html
 
-- [ ] Add a span element with id="name" in the header of Index1.html to display the username.
-- [ ] Add a script at the end of Index1.html to retrieve the user object from localStorage and populate the 'name' element with the username.
+- [ ] Wrap the welcome message in `<section>` inside `<main>`.
+- [ ] Change `<div class="mini_pre">` to `<section class="bonus">` and add `class="ima1"` to the bonus image.
+- [ ] Change `<div class="jeux">` to `<section class="games">`.
